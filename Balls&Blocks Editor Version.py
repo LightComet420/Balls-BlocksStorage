@@ -417,6 +417,47 @@ print("X2Array =",X2Array)
 print("Y2Array =",X2Array)
 print("BlockType =",BlockType)
 
+buildMode = 1
+while buildMode == 1:
+        click1 = window.getMouse()
+        placeDot = Circle(Point(click1.getX(),click1.getY()),3)
+        placeDot.draw(window)
+        if click1.getY() <= boxSize and click1.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)):
+            placeDot.undraw()
+            if click1.getX() >= doneButtonX:
+                buildMode = 0
+        else:
+            click2 = window.getMouse()
+            placeDot.undraw()
+            X1 = click1.getX()
+            Y1 = click1.getY()
+            X2 = click2.getX()
+            Y2 = click2.getY()
+            if X1>X2:
+                X1=click2.getX()
+                X2=click1.getX()
+            if Y1>Y2:
+                Y1=click2.getY()
+                Y2=click1.getY()
+            radius = math.sqrt(X2**2+Y2**2)
+            ball = Circle(Point(X1,Y1),radius)
+            spawnX.append(X1)
+            spawnY.append(Y1)
+            spawnRadius.append(radius)
+            ball.draw(window)
+            
+            
+print(spawnX)
+print(spawnY)
+print(spawnRadius)
+
+
+
+
+
+
+
+
 
 
 for z in range(5):
