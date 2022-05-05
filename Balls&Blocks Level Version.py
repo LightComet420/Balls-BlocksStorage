@@ -1,9 +1,15 @@
 from graphics import *;
 from random import *;
 import math;
+OGWinWid = 1366
+OGWinHei = 768
 WinWid = 1366
 WinHei = 768
 window = GraphWin("Window", WinWid,WinHei);
+
+XR = WinWid/OGWinWid
+YR = WinHei/OGWinHei
+BR = math.sqrt(WinWid/OGWinWid)*math.sqrt(WinHei/OGWinHei)
 
 #(code below)
 
