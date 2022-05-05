@@ -495,7 +495,11 @@ justPicked8 = 0
 maxLevel = 40
 currentLevel = 30
 levelsComplete = maxLevel
+<<<<<<< Updated upstream
 OGFrameMul = 1.25
+=======
+OGFrameMul = 1
+>>>>>>> Stashed changes
 FrameMul = OGFrameMul
 #AH YES, THE SUPER LOOP--------------------------------------------------------------------------------------------
 #      |||
@@ -963,13 +967,13 @@ while(1):
         availableChoices = 9
         
     if currentLevel == 30:
-        X1Array = [903, 902, 899, 916, 919, 927, 923, 30, 532, 532, 45]
-        Y1Array = [362, 196, 28, 271, 474, 371, 196, 343, 350, 324+200, 287+400]
-        X2Array = [918, 915, 914, 1082, 1081, 1076, 1078, 100, 596, 595, 103]
-        Y2Array = [485, 285, 125, 284, 484, 463, 265, 406, 406, 373+200, 340+400]
-        BlockType = [2, 2, 2, 2, 2, 8, 8, 8, 8, 8, 8]
+        X1Array = [903, 902, 899, 899, 916, 919, 927, 923, 30, 532, 532, 45]
+        Y1Array = [362, 196, 28, 100, 271, 474, 371, 196, 343, 350, 324+200, 287+400]
+        X2Array = [918, 915, 914, 899+200, 1082, 1081, 1076, 1078, 100, 596, 595, 103]
+        Y2Array = [485, 285, 125, 124, 284, 484, 463, 265, 406, 406, 373+200, 340+400]
+        BlockType = [2, 2, 2, 2, 2, 2, 8, 8, 8, 8, 8, 8]
         spawnX = [WinWid/2]
-        spawnY = [WinHei/2]
+        spawnY = [WinHei/2+50]
         spawnRadius = [75]
 
         qTMessage = "You need a specific gravity arch for this. Use"
@@ -1385,7 +1389,10 @@ while(1):
                         ballHealth = OGballHealth*0.85
                         projRadius = (scale/projFracSize)*1.5
                         cost = 135
+<<<<<<< Updated upstream
                         FrameMul = 1.5*OGFrameMul
+=======
+>>>>>>> Stashed changes
                         delay = 200
                         Name = Text(Point(357+ballNumber*boxSize,10), "High Velocity Ball")
                         Stats = Text(Point(357+ballNumber*boxSize,30), "$: 135, HP: 85, V: 225, Special: None")
@@ -1675,7 +1682,7 @@ while(1):
                     if dem1 != 0:
                         targA1=-math.atan((numer1-(velocity*velocity))/dem1)
                     angle = (targA1)
-                    pythag = 10*math.sqrt(h*h+v*v)
+                    pythag = 100*math.sqrt(h*h+v*v)
                     line = Line(Point(canPosX,canPosY), Point(canPosX+shootForward*(pythag*math.cos(angle)),canPosY+(pythag*math.sin(angle))))
                     line.draw(window)
                     line.setWidth(2)
