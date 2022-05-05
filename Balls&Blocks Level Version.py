@@ -495,6 +495,8 @@ justPicked8 = 0
 maxLevel = 40
 currentLevel = 30
 levelsComplete = maxLevel
+OGFrameMul = 1.25
+FrameMul = OGFrameMul
 #AH YES, THE SUPER LOOP--------------------------------------------------------------------------------------------
 #      |||
 #      |||
@@ -1367,6 +1369,7 @@ while(1):
                     Grav2 = -1000
                     delay = 200
                     zigOn = 0
+                    FrameMul = OGFrameMul
                     MinCircle.undraw()
                     MaxCircle.undraw()
                     Name.undraw()
@@ -1382,7 +1385,7 @@ while(1):
                         ballHealth = OGballHealth*0.85
                         projRadius = (scale/projFracSize)*1.5
                         cost = 135
-                        num3 = 400
+                        FrameMul = 1.5*OGFrameMul
                         delay = 200
                         Name = Text(Point(357+ballNumber*boxSize,10), "High Velocity Ball")
                         Stats = Text(Point(357+ballNumber*boxSize,30), "$: 135, HP: 85, V: 225, Special: None")
@@ -1547,6 +1550,8 @@ while(1):
                     xCord = (ReflectX*shootForward*(scale*velocity*(math.cos(angle)+math.cos(angle+pie2/2)*goingUp*incriment*zigOn)))/num3
                     yCord = (ReflectY*shootForward*(scale*velocity*(math.sin(angle)+math.sin(angle+pie2/2)*goingUp*incriment*zigOn)))/num3
                     yCord = yCord+((gravity*gravMul)/num3)+ReflectPlaceHold/num3
+                    xCord = xCord/FrameMul
+                    yCord = yCord/FrameMul
                     if runExplosion != 1:
                         array[1].move(xCord,yCord)
                         currentX = currentX+xCord
@@ -1645,7 +1650,7 @@ while(1):
                         else:
                             WithinX = 0
                         Within[o] = WithinX
-                    time.sleep(delay/(scale*400))
+                    time.sleep((delay/(scale*400))/FrameMul)
                 ExplosionRan = 0
                 array[1].undraw()
                 
