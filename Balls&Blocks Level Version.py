@@ -492,6 +492,7 @@ print("")
 GUIfix = 0
 justPicked8 = 0
 
+ignoreBlockChoices = 0
 maxLevel = 40
 currentLevel = 30
 levelsComplete = maxLevel
@@ -1275,7 +1276,7 @@ while(1):
         #print(runNormally)
         qT.undraw()
         qT2.undraw()
-        if aim.getY() <= boxSize and aim.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)):
+        if aim.getY() <= boxSize and aim.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)) and choice != 8:
                 pastChoice2 = choice2
                 choice2 = (35-round((aim.getX()+(0.75*boxSize)-(WinWid-doneButtonX))/boxSize))
                 Name.undraw()
@@ -1341,7 +1342,7 @@ while(1):
                 Stats.draw(window)
                 Description.draw(window)
                 viewingBlocks = 1
-                    
+        ignoreBlockChoices = 0                    
         if aim.getX() <= canPosX:
             shootForward = -1
         if aim.getX() > canPosX:
@@ -1661,7 +1662,11 @@ while(1):
             if choice8Ran == 0 and runNormally == -2 and viewingBlocks == 0 and levelBeat == 0:
                 runChoices = 0
                 #print("waiting for click 2")
-                aim = window.getMouse()
+                aim = window.getMouse()         
+                if aim.getX() <= canPosX:
+                    shootForward = -1
+                if aim.getX() > canPosX:
+                    shootForward = 1
                 if (aim.getY() > boxSize or aim.getX() > boxSize*ballNumber) and (aim.getY() > boxSize or aim.getX() > boxSize*ballNumber):
                     runNormally = 1
                     target = Circle(Point(aim.getX(),aim.getY()), 4)
@@ -1669,6 +1674,7 @@ while(1):
                     OGGravity = -OGGravity/(2)
                     h = shootForward*((aim.getX()-canPosX))
                     v = ((aim.getY()-canPosY))
+                    print(h/shootForward,v,shootForward)
                     numer1 = math.sqrt(abs((-2*(OGGravity)*velocity*velocity*-(2*v))-((OGGravity*OGGravity)*(-2*h)*(-2*h))+(velocity*velocity*velocity*velocity)))
                     dem1 = OGGravity*(-2*h)
                     if dem1 != 0:
