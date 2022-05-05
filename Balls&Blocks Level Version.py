@@ -446,9 +446,6 @@ loadLevel = 1
 HitboxesEnabled = 0
 currentX = canPosX
 currentY = canPosY
-currentLevel = 1
-maxLevel = 32
-levelsComplete = maxLevel
 availableChoices = 1
 delay = 200
 justStarted = 1
@@ -487,7 +484,11 @@ print("")
 print("")
 print("")
 GUIfix = 0
+justPicked8 = 0
 
+maxLevel = 40
+currentLevel = 30
+levelsComplete = maxLevel
 #AH YES, THE SUPER LOOP--------------------------------------------------------------------------------------------
 #      |||
 #      |||
@@ -507,6 +508,8 @@ while(1):
             totalTotalBalls = totalTotalBalls+levelBalls[p]
         print("Total Cost: $"+str(totalTotalCost))
         print("Total Balls:",str(totalTotalBalls))
+    MinCircle.undraw()
+    MaxCircle.undraw()
     spawnX = []
     spawnY = []
     spawnRadius = []
@@ -858,11 +861,12 @@ while(1):
         availableChoices = 5
         
     if currentLevel == 24:
+
         X1Array = [276, 296, 313]
         Y1Array = [408, 409, 435]
         X2Array = [295, 1330, 700]
         Y2Array = [564, 421, 464]
-        BlockType = [2, 2, 1]
+        BlockType = [2, 2, 3]
         spawnX = [110]
         spawnY = [316]
         spawnRadius = [150]
@@ -997,6 +1001,156 @@ while(1):
         qTX = WinWid/2 + 400
         qTY = WinHei/2 - 250
         
+
+    if currentLevel == 33:
+        X1Array = [283, 170, 177, 322, 472, 617, 823, 7]
+        Y1Array = [291, 289, 502, 378, 376, 376, 368, 47]
+        X2Array = [298, 262, 274, 449, 593, 785, 883, 54]
+        Y2Array = [491, 309, 526, 391, 396, 403, 411, 725]
+        BlockType = [2, 5, 6, 3, 3, 8, 9, 11]
+        spawnX = [147]
+        spawnY = [398]
+        spawnRadius = [90]
+
+
+        qTMessage = "That's the end of the introduction! Enjoy the"
+        qTMessage2 = "following free-play levels. Last level is "+str(maxLevel)
+        qTX = WinWid/2
+        qTY = WinHei/2 - 250
+
+    if currentLevel == 34:
+        X1Array = [1123, 659, 632, 649, 572, 353, 207, 1257, 1123, 571, 520, 736, 911]
+        Y1Array = [357, 363, 364, 112, 614, 102, 122, 360, 266, 646, 91, 92, 361]
+        X2Array = [1202, 678, 652, 659, 702, 383, 335, 1276, 1197, 697, 575, 793, 945]
+        Y2Array = [448, 445, 443, 142, 632, 257, 173, 450, 329, 658, 144, 146, 447]
+        BlockType = [11, 3, 3, 4, 1, 2, 8, 3, 7, 9, 10, 10, 5]
+        spawnX = [371, 1031, 794]
+        spawnY = [465, 405, 397]
+        spawnRadius = [150, 70, 66]
+
+        qTMessage = "Oh and if you didn't know, the three buttons in"
+        qTMessage2 = "the corner are last, restart, and next level"
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+
+        
+    if currentLevel == 35:
+        X1Array = [534, 536, 654, 1345, 1262, 1258, 1107, 996, 848, 720, 417, 306, 586, 1090, 319, 389, 1289, 540, 1316-50, 931]
+        Y1Array = [394, 489, 394, 385, 475, 384, 551, 549, 554, 559, 542, 542, 69, 84, 119, 218, 64, 104, 521+50, 59]
+        X2Array = [547, 664, 663, 1352, 1352, 1269, 1230, 1078, 960, 818, 493, 402, 665, 1159, 391, 399, 1344, 587, 1347-50, 994]
+        Y2Array = [488, 498, 488, 476, 484, 475, 560, 560, 566, 568, 552, 553, 103, 121, 149, 283, 125, 144, 556+50, 124]
+        BlockType = [2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 5, 5, 5, 4, 11, 11, 9, 11]
+        spawnX = [598, 1305]
+        spawnY = [428, 430]
+        spawnRadius = [39, 39]
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 36:
+        X1Array = [595, 579, 558, 618, 619, 620, 756, 770, 787, 616, 617, 614, 197, 196, 195, 139, 87, 37, 488, 760]
+        Y1Array = [299, 301, 300, 285, 263, 247, 300, 300, 302, 443, 462, 485, 569, 617, 683, 125, 128, 129, 454, 451]
+        X2Array = [610, 589, 569, 753, 750, 746, 760, 778, 797, 749, 746, 743, 1313, 1306, 1294, 187, 125, 79, 609, 907]
+        Y2Array = [442, 438, 440, 294, 280, 256, 437, 435, 435, 453, 474, 504, 605, 658, 708, 552, 551, 538, 500, 506]
+        BlockType = [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 11, 11, 11, 11, 11, 11, 8, 8]
+        spawnX = [685, 687]
+        spawnY = [367, 109]
+        spawnRadius = [63, 61]
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 37:
+        X1Array = [212, 212, 525, 1034, 1047, 765, 887, 503, 781, 1218, 648, 61, 798, 1289, 51, 291, 746, 1061, 1214, 921, 1031, 664, 238, 441, 95, 538, 1049, 323, 932, 785, 392, 128, 1243, 369, 942, 1075, 550]
+        Y1Array = [576, 219, 128, 311, 141, 203, 575, 468, 390, 575, 607, 433, 43, 128, 108, 111, 112, 263, 490, 484, 615, 497, 470, 619, 272, 288, 87, 56, 188, 555, 439, 165, 199, 274, 378, 513, 54]
+        X2Array = [284, 319, 605, 1163, 1102, 819, 956, 561, 824, 1303, 703, 92, 856, 1328, 102, 350, 827, 1107, 1265, 971, 1173, 700, 310, 541, 172, 591, 1085, 351, 958, 844, 427, 179, 1294, 422, 986, 1130, 638]
+        Y2Array = [614, 248, 194, 411, 205, 246, 619, 520, 439, 629, 656, 477, 81, 165, 147, 139, 170, 298, 538, 528, 649, 546, 534, 654, 368, 331, 97, 73, 215, 634, 472, 201, 266, 327, 409, 555, 77]
+        BlockType = [11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 10, 10, 10, 10, 10, 8, 8, 8, 8]
+        spawnX = [693]
+        spawnY = [356]
+        spawnRadius = [574]
+
+        qTMessage = "Sorry"
+        qTMessage2 = ""
+        qTX = WinWid/2
+        qTY = WinHei/2
+        
+    if currentLevel == 38:
+        X1Array = [352, 602, 179, 597, 137, 416, 851, 764, 396, 398, 397, 365, 388, 343, 336, 336, 340, 374, 394, 429, 450, 432, 399, 413, 407, 574, 586, 531, 550, 483, 513, 492, 55, 55, 55, 822, 824, 58, 641, 59, 157, 424, 634, 845, 757, 537, 293]
+        Y1Array = [148, 604, 556, 306, 234, 434, 149, 482, 151, 155, 172, 190, 192, 189, 173, 153, 137, 136, 142, 424, 447, 469, 452, 467, 429, 266, 382, 249, 421, 234, 408, 271, 709, 695, 679, 680, 700, 651, 632, 632, 70, 67, 71, 97, 107, 110, 100]
+        X2Array = [394, 643, 234, 660, 189, 449, 892, 833, 400, 407, 407, 377, 397, 353, 347, 345, 355, 383, 404, 443, 462, 444, 413, 421, 410, 605, 620, 557, 583, 517, 557, 528, 817, 816, 816, 1357, 1352, 1353, 1348, 636, 228, 501, 709, 882, 795, 591, 346]
+        Y2Array = [187, 627, 603, 355, 274, 461, 186, 544, 155, 162, 174, 199, 202, 196, 181, 166, 144, 141, 149, 428, 461, 481, 463, 478, 440, 296, 397, 275, 454, 265, 444, 292, 722, 705, 690, 695, 718, 669, 643, 643, 102, 108, 107, 107, 123, 124, 129]
+        BlockType = [9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 11, 11, 11, 11, 11, 11, 11, 11, 6, 6, 6, 6, 4, 4, 4]
+        spawnX = [428]
+        spawnY = [352]
+        spawnRadius = [601]
+
+
+        qTMessage = "Bling bling"
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2
+        
+    if currentLevel == 39:
+        X1Array = [687, 49, 52, 57, 56, 50, 46, 52, 160, 161, 165, 163, 165, 166, 147, 245, 324, 382, 725, 740, 789, 966, 1084, 1200, 1077, 753, 772, 442, 446, 477, 331, 226]
+        Y1Array = [1, 86, 208, 314, 399, 495, 568, 665, 88, 216, 314, 393, 494, 567, 681, 93, 96, 98, 355, 250, 476, 545, 458, 610, 408, 10, 11, 99, 226,  53, 50, 53]
+        X2Array = [724, 102, 100, 103, 99, 105, 98, 91, 214, 209, 204, 218, 207, 211, 197, 315, 365, 420, 957, 831, 864, 1101, 1147, 1277, 1245, 763, 776, 450, 450, 535, 408, 320]
+        Y2Array = [741, 147, 255, 360, 460, 546, 631, 711, 160, 261, 366, 465, 539, 619, 728, 723, 717, 721, 384, 338, 527, 651, 498, 658, 418, 92, 89, 204, 470, 97, 74, 74]
+        BlockType = [2, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 11, 2, 7, 8, 8, 8, 8, 3, 4, 4, 5, 6, 8, 8, 8,]
+        spawnX = [7, 1200]
+        spawnY = [390, 274]
+        spawnRadius = [673, 129]
+
+
+
+
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 350:
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 350:
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 350:
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 350:
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 350:
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+
+        
     if currentLevel == maxLevel:
         availableChoices = 11
 
@@ -1084,6 +1238,11 @@ while(1):
         if spawnCount <=0:
             validSpawn = 1
         if validSpawn == 1:
+            if choice == 9:
+                MinCircle = Circle(Point(canPosX,canPosY),MinStrength*NormalDistance)
+                MaxCircle = Circle(Point(canPosX,canPosY),MaxStrength*NormalDistance)
+                MinCircle.draw(window)
+                MaxCircle.draw(window)
             cannon.undraw()
             cannon = Circle(Point(canPosX,canPosY),scale/2)
             cannon.setFill(color_rgb(40,40,40))
@@ -1097,7 +1256,15 @@ while(1):
         xCord = 0
         yCord = 0
         cannon.setFill(color_rgb(40,200,40))
-        aim=window.getMouse()
+        if choice !=8:
+            aim=window.getMouse()
+        else:
+            if runNormally !=-2 or justPicked8 == 1:
+                #print("click 1; -2 !=",runNormally,"or 1 ==",justPicked8)
+                aim=window.getMouse()
+        if justPicked8 == 1:
+            justPicked8 = 0
+        #print(runNormally)
         qT.undraw()
         qT2.undraw()
         if aim.getY() <= boxSize and aim.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)):
@@ -1172,15 +1339,18 @@ while(1):
         if aim.getX() > canPosX:
             shootForward = 1
         ballHealth = newBallHealth
+        #print(aim.getY(),"<=",boxSize,"and",aim.getX(),"<= ",boxSize*ballNumber,"and",runChoices,"==",1,"and",viewingBlocks,"==",0,"or",justStarted,"==",1)
         if (aim.getY() <= boxSize and aim.getX() <= boxSize*ballNumber and runChoices == 1 and viewingBlocks == 0) or justStarted == 1:
             if justStarted == 0:
                 pastChoice = choice
                 choice = round((aim.getX()-(boxSize/2))/boxSize)
             justStarted = 0
+            #print("ran choices")
             if runChoices== 1 and choice < availableChoices:
                     extraBalls[pastChoice].setOutline(color_rgb(200,10,10))
                     extraBalls[choice].setOutline(color_rgb(10,200,10))
                     velocity = OGvelocity
+                    justPicked8 = 0
                     gravMul = 1
                     projRadius = scale/projFracSize
                     ballHealth = OGballHealth
@@ -1204,6 +1374,7 @@ while(1):
                     if choice == 1:
                         velocity = OGvelocity*2.25
                         ballHealth = OGballHealth*0.85
+                        projRadius = (scale/projFracSize)*1.5
                         cost = 135
                         num3 = 400
                         delay = 200
@@ -1214,9 +1385,10 @@ while(1):
                     if choice == 2:
                         velocity = OGvelocity*1.35
                         projRadius = (scale/projFracSize)/3
+                        ballHealth = OGballHealth*0.75
                         cost = 110
                         Name = Text(Point(357+ballNumber*boxSize,10), "Tiny Ball")
-                        Stats = Text(Point(357+ballNumber*boxSize,30), "$: 110, HP: 100, V: 135, Special: Physically Tiny")
+                        Stats = Text(Point(357+ballNumber*boxSize,30), "$: 110, HP: 75, V: 135, Special: Physically Tiny")
                         Description = Text(Point(357+ballNumber*boxSize,50), "Description: Visibly smaller, can be useful for avoiding blocks.")
                         color = (color_rgb(0,200,150))
                     if choice == 3:
@@ -1273,6 +1445,7 @@ while(1):
                         Description = Text(Point(357+ballNumber*boxSize,50), "Description: Click once to target area, click a line to hit the area.")
                         color = (color_rgb(0,200,200))
                         runNormally = -2
+                        justPicked8 = 1
                     if choice == 9:
                         cost = 185
                         MinCircle = Circle(Point(canPosX,canPosY),MinStrength*NormalDistance)
@@ -1409,7 +1582,7 @@ while(1):
                                     ReflectX = -ReflectX
                                 if BlockType[o]== 3 and obsHealth[o] > 0 and Within[o] != 0:
                                     ReflectY = -ReflectY
-                                    ReflectPlaceHold = -(gravity+ReflectPlaceHold)
+                                    ReflectPlaceHold = -(gravity*gravMul+ReflectPlaceHold)
                                     gravity = 0
                                 if BlockType[o]== 4 and obsHealth[o] > 0:
                                     ReflectX = 0
@@ -1474,9 +1647,12 @@ while(1):
             for b in range(obsCount):
                 if (BlockType[b] != 0 and BlockType[b] != 2 and BlockType[b] != 11  and BlockType[b] != 9 and BlockType[b] != 10) and restart == 0:
                     levelBeat = 0
-            if (choice8Ran == 0 and runNormally == -2 and (aim.getY() > boxSize or aim.getX() > boxSize*ballNumber) and (aim.getY() > boxSize or aim.getX() > boxSize*ballNumber)) and viewingBlocks == 0 and levelBeat ==0:
-                    runChoices = 0
-                    aim = window.getMouse()
+            #print(choice8Ran,"== 0 and",runNormally,"== -2 and",viewingBlocks,"== 0 and",levelBeat,"== 0")
+            if choice8Ran == 0 and runNormally == -2 and viewingBlocks == 0 and levelBeat == 0:
+                runChoices = 0
+                #print("waiting for click 2")
+                aim = window.getMouse()
+                if (aim.getY() > boxSize or aim.getX() > boxSize*ballNumber) and (aim.getY() > boxSize or aim.getX() > boxSize*ballNumber):
                     runNormally = 1
                     target = Circle(Point(aim.getX(),aim.getY()), 4)
                     target.draw(window)
@@ -1502,12 +1678,15 @@ while(1):
                     line2 = Line(Point(canPosX,canPosY), Point(canPosX+shootForward*(pythag*math.cos(angle2)),canPosY+(pythag*math.sin(angle2))))
                     line2.draw(window)
                     line2.setWidth(2)
+                else:
+                    justPicked8 =0
+                    runChoices = 1
             if choice == 8 and viewingBlocks == 0:
                 if choice8Ran == 1:
                     choice8Ran = 2
                 if choice8Ran == 0:
                     choice8Ran = 1
-                    runNormally = 1
+                    RunNormally = 1
                 if choice8Ran == 2:
                     choice8Ran = 0
             viewingBlocks = 0
