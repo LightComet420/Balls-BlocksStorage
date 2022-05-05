@@ -495,11 +495,7 @@ justPicked8 = 0
 maxLevel = 40
 currentLevel = 30
 levelsComplete = maxLevel
-<<<<<<< Updated upstream
-OGFrameMul = 1.25
-=======
 OGFrameMul = 1
->>>>>>> Stashed changes
 FrameMul = OGFrameMul
 #AH YES, THE SUPER LOOP--------------------------------------------------------------------------------------------
 #      |||
@@ -1389,10 +1385,6 @@ while(1):
                         ballHealth = OGballHealth*0.85
                         projRadius = (scale/projFracSize)*1.5
                         cost = 135
-<<<<<<< Updated upstream
-                        FrameMul = 1.5*OGFrameMul
-=======
->>>>>>> Stashed changes
                         delay = 200
                         Name = Text(Point(357+ballNumber*boxSize,10), "High Velocity Ball")
                         Stats = Text(Point(357+ballNumber*boxSize,30), "$: 135, HP: 85, V: 225, Special: None")
@@ -1682,7 +1674,7 @@ while(1):
                     if dem1 != 0:
                         targA1=-math.atan((numer1-(velocity*velocity))/dem1)
                     angle = (targA1)
-                    pythag = 100*math.sqrt(h*h+v*v)
+                    pythag = 100*math.sqrt(h*h+v*v);
                     line = Line(Point(canPosX,canPosY), Point(canPosX+shootForward*(pythag*math.cos(angle)),canPosY+(pythag*math.sin(angle))))
                     line.draw(window)
                     line.setWidth(2)
