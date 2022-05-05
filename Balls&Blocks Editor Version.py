@@ -274,10 +274,13 @@ HealthMul = 1
 
 #LEVELS
 levelBeat = 0
-X1Array = [50]
-Y1Array = [50]
-X2Array = [50]
-Y2Array = [50]
+X1Array = []
+Y1Array = []
+X2Array = []
+Y2Array = []
+spawnX = []
+spawnY = []
+spawnRadius = []
 
 for b in range(blockNumber):
     boxSize = 37
@@ -368,7 +371,7 @@ while buildMode == 1:
             X1Array.append(X1)
             Y1Array.append(Y1)
             X2Array.append(X2)
-            X2Array.append(Y2)
+            Y2Array.append(Y2)
             BlockType.append(TempType)
             if TempType == 1:
                 pillar.setFill(colType1)
@@ -405,7 +408,6 @@ while buildMode == 1:
             obsHealth.append(objHealth)
             Within.append(0)
             alreadyMirrored.append(0)
-            BlockType.append(TempType)
             obsCount=obsCount + 1
             obstacles[obsCount-2].draw(window)
             #^^^ Theres a reason for the -2 idk why tho
@@ -414,8 +416,36 @@ while buildMode == 1:
 print("X1Array =",X1Array)
 print("Y1Array =",Y1Array)
 print("X2Array =",X2Array)
-print("Y2Array =",X2Array)
+print("Y2Array =",Y2Array)
 print("BlockType =",BlockType)
+
+buildMode = 1
+while buildMode == 1:
+        click1 = window.getMouse()
+        placeDot = Circle(Point(click1.getX(),click1.getY()),3)
+        placeDot.draw(window)
+        if click1.getY() <= boxSize and click1.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)):
+            placeDot.undraw()
+            if click1.getX() >= doneButtonX:
+                buildMode = 0
+        else:
+            click2 = window.getMouse()
+            placeDot.undraw()
+            X1 = click1.getX()
+            Y1 = click1.getY()
+            X2 = click2.getX()
+            Y2 = click2.getY()
+            radius = round(math.sqrt((X2-X1)**2+(Y2-Y1)**2))
+            ball = Circle(Point(X1,Y1),radius)
+            spawnX.append(X1)
+            spawnY.append(Y1)
+            spawnRadius.append(radius)
+            ball.draw(window)
+                 
+print("spawnX =",spawnX)
+print("spawnY =",spawnY)
+print("spawnRadius =",spawnRadius)
+
 
 
 
