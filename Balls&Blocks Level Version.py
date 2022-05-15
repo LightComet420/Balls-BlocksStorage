@@ -328,121 +328,31 @@ for b in range(blockNumber):
     GUI.setWidth(3)
     GUI.setOutline(color_rgb(200,10,10))
 
-while buildMode == 1 and currentLevel == 0:
-        click1 = window.getMouse()
-        placeDot = Circle(Point(click1.getX(),click1.getY()),3)
-        placeDot.draw(window)
-        if click1.getY() <= boxSize and click1.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)):
-            placeDot.undraw()
-            if click1.getX() >= doneButtonX:
-                buildMode = 0
-            else:
-                pastChoice = choice
-                choice = (35-round((click1.getX()+(0.75*boxSize)-(WinWid-doneButtonX))/boxSize))
-                extraBlocks[pastChoice].setOutline(color_rgb(200,10,10))
-                extraBlocks[choice].setOutline(color_rgb(10,200,10))
-                TempType=choice+1
-                if choice == 0:
-                    print("Regular Block")
-                    print("HP: 100, Special: None")
-                    print("Description: Normal block; health depends on size, nothing specical.")
-                if choice == 1:
-                    print("Barrier Block")
-                    print("HP: N/A, Special: Infinite Health")
-                    print("Description: Blocks you from shooting; indestructable.")
-                if choice == 2:
-                    print("Reflecter Block")
-                    print("HP: 50, Special: Changes Ball Direction")
-                    print("Description: Upon death, reverses the direction the ball travels.")
-                if choice == 3:
-                    print("Stopper Block")
-                    print("HP: 100, Special: Stops Ball Movement")
-                    print("Description: Upon death, makes the ball fall to the ground.")
-                if choice == 4:
-                    print("Booster Block")
-                    print("HP: 200, Special: Increases Ball Velocity")
-                    print("Description: Upon death, makes the ball double velocity. Doesn't stack.")
-                if choice == 5:
-                    print("Slower Block")
-                    print("HP: 200, Special: Increases Ball Velocity")
-                    print("Description: Upon death, makes the ball double velocity. Doesn't stack.")
-                if choice == 6:
-                    print("Tough Block")
-                    print("HP: 200, Special: Increases Ball Velocity")
-                    print("Description: Upon death, makes the ball double velocity. Doesn't stack.")
-                if choice == 7:
-                    print("Weak Block")
-                    print("HP: 200, Special: Increases Ball Velocity")
-                    print("Description: Upon death, makes the ball double velocity. Doesn't stack.")
-                if choice == 8:
-                    print("Profit Block")
-                    print("HP: 200, Special: Gives Money")
-                    print("Description: Upon death, gives 175$.")
-                if choice == 9:
-                    print("Expense Block")
-                    print("HP: 50, Special: Takes Money")
-                    print("Description: Upon death, takes 175$.")
-                if choice == 10:
-                    print("Mirror Block")
-                    print("HP: N/A, Special: Reflects/Teleports Ball")
-                    print("Description: Once hit, it will die and teleport the ball across the center.")
-        else:
-            click2 = window.getMouse()
-            placeDot.undraw()
-            X1 = click1.getX()
-            Y1 = click1.getY()
-            X2 = click2.getX()
-            Y2 = click2.getY()
-            if X1>X2:
-                X1=click2.getX()
-                X2=click1.getX()
-            if Y1>Y2:
-                Y1=click2.getY()
-                Y2=click1.getY()
-            objHealth = abs((Y2-Y1)*(X2-X1))*HealthMul
-            pillar = Rectangle(Point(X1,Y1),Point(X2,Y2))
-            if TempType == 1:
-                pillar.setFill(colType1)
-            if TempType == 2:
-                pillar.setFill(colType2)
-            if TempType == 3:
-                pillar.setFill(colType3)
-                objHealth = objHealth * 0.5
-            if TempType == 4:
-                pillar.setFill(colType4)
-            if TempType == 5:
-                pillar.setFill(colType5)
-                objHealth = objHealth * 2
-            if TempType == 6:
-                pillar.setFill(colType6)
-                objHealth = objHealth * 0.5
-            if TempType == 7:
-                pillar.setFill(colType7)
-                objHealth = objHealth * 4
-            if TempType == 8:
-                pillar.setFill(colType8)
-                objHealth = objHealth * 0.25
-            if TempType == 9:
-                pillar.setFill(colType9)
-                objHealth = objHealth * 2
-            if TempType == 10:
-                pillar.setFill(colType10)
-                objHealth = objHealth * 0.5
-            if TempType == 11:
-                pillar.setFill(colType11)
-                objHealth = objHealth * 0.001
-            
-            obstacles.append(pillar)
-            obsHealth.append(objHealth)
-            Within.append(0)
-            alreadyMirrored.append(0)
-            BlockType.append(TempType)
-            obsCount=obsCount + 1
-            obstacles[obsCount-2].draw(window)    
+  
 
 for z in range(5):
     array.append("e")
 
+
+
+
+MemX1Array = []
+MemY1Array = []
+MemX2Array = []
+MemY2Array = []
+MemBlockType = []
+MemSpawnX = []
+MemSpawnY = []
+MemSpawnRadius = []
+MemLoad = 0
+MemX1Array.extend(empty)
+MemY1Array.extend(empty)
+MemX2Array.extend(empty)
+MemY2Array.extend(empty)
+MemBlockType.extend(empty)
+MemSpawnX.extend(empty)
+MemSpawnY.extend(empty)
+MemSpawnRadius.extend(empty)
 
 
 choice = 0
@@ -469,12 +379,15 @@ spawnY.extend(empty)
 spawnRadius.extend(empty)
 spawnCount = 0
 validSpawn = 0
-
+validEdit = 0
 lastLevel = 0
 restart = 0
 nextLevel = 0
+justBuilt = 0
+justBuilt2 = 0
 totalTotalCost = 0
 totalTotalBalls = 0
+colArray = [colType1,colType2,colType3,colType4,colType5,colType6,colType7,colType8,colType9,colType10,colType11]
 
 print("------------UPDATE LOG------------")
 print("~fixed nothing")
@@ -493,11 +406,13 @@ GUIfix = 0
 justPicked8 = 0
 
 ignoreBlockChoices = 0
-maxLevel = 40
-currentLevel = 30
-levelsComplete = maxLevel
+maxLevel = 42
+currentLevel = 42
+prevLevel = 0
+levelsComplete = maxLevel+100
 OGFrameMul = 1
 FrameMul = OGFrameMul
+buildMode = 0
 #AH YES, THE SUPER LOOP--------------------------------------------------------------------------------------------
 #      |||
 #      |||
@@ -506,8 +421,10 @@ FrameMul = OGFrameMul
 #     \|||/
 #      \|/
 while(1):
-    if currentLevel == maxLevel+1:
+    print(currentLevel)
+    if currentLevel == maxLevel+2:
         currentLevel = 1
+    if currentLevel == maxLevel+1 and prevLevel == maxLevel:
         totalTotalCost = 0
         totalTotalBalls = 0
         print("Level Scores:")
@@ -516,12 +433,34 @@ while(1):
             totalTotalCost = totalTotalCost+levelCost[p]
             totalTotalBalls = totalTotalBalls+levelBalls[p]
         print("Total Cost: $"+str(totalTotalCost))
-        print("Total Balls:",str(totalTotalBalls))
+        print("Total Balls:",str(totalTotalBalls))    
+    prevLevel = currentLevel
     MinCircle.undraw()
     MaxCircle.undraw()
-    spawnX = []
-    spawnY = []
-    spawnRadius = []
+    buildMode = 0
+    validEdit = 0
+    if currentLevel != maxLevel+1 or justBuilt != 0 or justBuilt2 == 0:
+        BuildObstacles = []
+        X1Array = []
+        Y1Array = []
+        X2Array = []
+        Y2Array = []
+        BlockType = []
+        spawnX = []
+        spawnY = []
+        spawnRadius = []
+    if MemLoad == 1: 
+        for pain in range(len(MemBlockType)):
+            X1Array.append(MemX1Array[pain])
+            Y1Array.append(MemY1Array[pain])
+            X2Array.append(MemX2Array[pain])
+            Y2Array.append(MemY2Array[pain])
+            BlockType.append(MemBlockType[pain])
+        for pain in range(len(MemSpawnRadius)):
+            spawnX.append(MemSpawnX[pain])
+            spawnY.append(MemSpawnY[pain])
+            spawnRadius.append(MemSpawnRadius[pain])
+    editor = 0
     if currentLevel == 1:
         X1Array = [432]
         Y1Array = [410]
@@ -1116,43 +1055,113 @@ while(1):
         spawnRadius = [673, 129]
 
 
-
-
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 40:
+        X1Array = [9, 12, 17, 18, 13, 11, 12, 18, 146, 303, 436, 566, 690]
+        Y1Array = [704, 667, 629, 593, 562, 525, 484, 442, 444, 446, 444, 441, 441]
+        X2Array = [1349, 1343, 1332, 1337, 1343, 1346, 1337, 119, 277, 411, 545, 676, 810]
+        Y2Array = [731, 694, 658, 618, 585, 552, 518, 458, 456, 454, 457, 455, 456]
+        BlockType = [11, 11, 11, 11, 11, 11, 11, 3, 3, 3, 3, 3, 3]
+        spawnX = [216, 743, 1207]
+        spawnY = [217, 215, 215]
+        spawnRadius = [204, 204, 217]
 
         qTMessage = ""
         qTMessage2 = ""
         qTX = WinWid/2 +400
         qTY = WinHei/2 - 300
         
-    if currentLevel == 350:
+    if currentLevel == 41:
+        X1Array = [667, 659, 551, 538, 550, 672, 727, 634, 524, 779, 500]
+        Y1Array = [218, 84, 361, 248, 407, 509, 483, 557, 51, 49, 214]
+        X2Array = [698, 681, 856, 550, 851, 702, 750, 726, 779, 912, 523]
+        Y2Array = [362, 198, 371, 361, 412, 531, 556, 575, 69, 66, 427]
+        BlockType = [7, 4, 3, 8, 3, 9, 2, 2, 2, 2, 3]
+        spawnX = [1123, 1128]
+        spawnY = [285, 599]
+        spawnRadius = [164, 256]
 
         qTMessage = ""
         qTMessage2 = ""
         qTX = WinWid/2 +400
         qTY = WinHei/2 - 300
         
-    if currentLevel == 350:
+    if currentLevel == 42:
+        X1Array = [600, 650, 491, 605, 537, 675, 605, 11, 43, 82, 535, 525, 537, 536, 535, 532, 533, 525]
+        Y1Array = [667, 579, 437, 703, 362, 196, 40, 46, 49, 52, 506, 489, 545, 588, 619, 653, 682, WinHei-50]
+        X2Array = [726, 711, 525, 1029, 558, 685, 761, 33, 71, 107, 562, 562, 561, 558, 559, 560, 557, 562]
+        Y2Array = [689, 636, 741, 711, 472, 226, 101, 738, 738, 734, 533, 502, 572, 614, 648, 678, 710, WinHei-30]
+        BlockType = [11, 7, 2, 3, 6, 4, 8, 11, 11, 11, 9, 2, 9, 9, 9, 9, 9, 2]
+        spawnX = [290]
+        spawnY = [555]
+        spawnRadius = [205]
 
         qTMessage = ""
         qTMessage2 = ""
         qTX = WinWid/2 +400
         qTY = WinHei/2 - 300
         
-    if currentLevel == 350:
+    if currentLevel == 430:
 
         qTMessage = ""
         qTMessage2 = ""
         qTX = WinWid/2 +400
         qTY = WinHei/2 - 300
         
-    if currentLevel == 350:
+    if currentLevel == 44:
 
         qTMessage = ""
         qTMessage2 = ""
         qTX = WinWid/2 +400
         qTY = WinHei/2 - 300
         
-    if currentLevel == 350:
+    if currentLevel == 45:
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 46:
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 47:
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 48:
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 49:
+
+        qTMessage = ""
+        qTMessage2 = ""
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 50:
+
+        qTMessage = "Last level! When you beat this you will go back to level one and the"
+        qTMessage2 = "scores are printed. (click red button and it will take you back here)"
+        qTX = WinWid/2 +400
+        qTY = WinHei/2 - 300
+        
+    if currentLevel == 500:
 
         qTMessage = ""
         qTMessage2 = ""
@@ -1162,12 +1171,170 @@ while(1):
         
     if currentLevel == maxLevel:
         availableChoices = 11
-
-
-
+    
+    if justBuilt== 1 and justBuilt2 == 0:
+        justBuilt = 0
+    else:
+        justBuilt2 = 0
         
+    if currentLevel == maxLevel+1 and justBuilt == 0 and justBuilt2 == 0 and MemLoad == 0:
+        availableChoices = 11
+        justBuilt = 1
+        justBuilt2 = 1
+        qTMessage = "Build your own level by selecting block icons and clicking two places to make them. Press"
+        qTMessage2 = "restart to make spawn points, then restart to play, then restart to make blocks again (repeats)."
+        qTX = WinWid/2
+        qTY = WinHei/2
+        qT = Text(Point(qTX,qTY), qTMessage)
+        qT.draw(window)
+        qT.setSize(18)
+        qT2 = Text(Point(qTX,qTY+tipIndent), qTMessage2)
+        qT2.draw(window)
+        qT2.setSize(18)
+        qTMessage = ""
+        qTMessage2 = ""
+        buildMode = 1
+        editor = 1
+        validEdit = 0
+        while buildMode == 1:
+                click1 = window.getMouse()
+                qT.undraw()
+                qT2.undraw()
+                placeDot = Circle(Point(click1.getX(),click1.getY()),3)
+                placeDot.draw(window)
+                if click1.getY() <= boxSize and click1.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)):
+                    placeDot.undraw()
+                    if click1.getX() >= doneButtonX:
+                        if doneButtonX+1*((WinWid-doneButtonX)/3) < click1.getX() and click1.getX() < doneButtonX+2*((WinWid-doneButtonX)/3) and validEdit == 1:
+                            editor = 2
+                            validEdit = 0
+                        buildMode = 0
+                    else:
+                        pastChoice = choice
+                        choice = (35-round((click1.getX()+(0.75*boxSize)-(WinWid-doneButtonX))/boxSize))
+                        extraBlocks[pastChoice].setOutline(color_rgb(200,10,10))
+                        extraBlocks[choice].setOutline(color_rgb(10,200,10))
+                        TempType=choice+1
+                        if choice2 == 0:
+                            Name = Text(Point(357+ballNumber*boxSize,10), "Regular Block")
+                            Stats = Text(Point(357+ballNumber*boxSize,30), "HP: 100, E: Y, Special: None")
+                            Description = Text(Point(357+ballNumber*boxSize,50), "Description: Normal block; health scaled by size, nothing specical.")
+                        if choice2 == 1:
+                            Name = Text(Point(357+ballNumber*boxSize,10), "Barrier Block")
+                            Stats = Text(Point(357+ballNumber*boxSize,30), "HP: N/A, E: N, Special: Infinite Health")
+                            Description = Text(Point(357+ballNumber*boxSize,50), "Description: Blocks you from shooting; indestructable.")
+                        if choice2 == 2:
+                            Name = Text(Point(357+ballNumber*boxSize,10), "Reflecter Block")
+                            Stats = Text(Point(357+ballNumber*boxSize,30), "HP: 50, E: Y, Special: Changes Ball Direction")
+                            Description = Text(Point(357+ballNumber*boxSize,50), "Description: Upon death, reverses the direction the ball travels.")
+                        if choice2 == 3:
+                            Name = Text(Point(357+ballNumber*boxSize,10), "Stopper Block")
+                            Stats = Text(Point(357+ballNumber*boxSize,30), "HP: 100, E: Y, Special: Stops Ball Movement")
+                            Description = Text(Point(357+ballNumber*boxSize,50), "Description: Upon death, halts ball's trajectory through it.")
+                        if choice2 == 4:
+                            Name = Text(Point(357+ballNumber*boxSize,10), "Booster Block")
+                            Stats = Text(Point(357+ballNumber*boxSize,30), "HP: 200, E: Y, Special: Increases Ball Velocity")
+                            Description = Text(Point(357+ballNumber*boxSize,50), "Description: Upon death, doubles velocity. Doesn't stack.")
+                        if choice2 == 5:
+                            Name = Text(Point(357+ballNumber*boxSize,10), "Slower Block")
+                            Stats = Text(Point(357+ballNumber*boxSize,30), "HP: 50, E: Y, Special: Decreases Ball Velocity")
+                            Description = Text(Point(357+ballNumber*boxSize,50), "Description: Upon death, halfens velocity. Doesn't stack.")
+                        if choice2 == 6:
+                            Name = Text(Point(357+ballNumber*boxSize,10), "Tough Block")
+                            Stats = Text(Point(357+ballNumber*boxSize,30), "HP: 400, E: Y, Special: None")
+                            Description = Text(Point(357+ballNumber*boxSize,50), "Description: Has four times the health of normal blocks.")
+                        if choice2 == 7:
+                            Name = Text(Point(357+ballNumber*boxSize,10), "Weak Block")
+                            Stats = Text(Point(357+ballNumber*boxSize,30), "HP: 25, E: Y, Special: None")
+                            Description = Text(Point(357+ballNumber*boxSize,50), "Description: Has one fourth the health of normal blocks.")
+                        if choice2 == 8:
+                            Name = Text(Point(357+ballNumber*boxSize,10), "Profit Block")
+                            Stats = Text(Point(357+ballNumber*boxSize,30), "HP: 200, E: N, Special: Gives Money")
+                            Description = Text(Point(357+ballNumber*boxSize,50), "Description: Upon death, always cuts $175 from expenses")
+                        if choice2 == 9:
+                            Name = Text(Point(357+ballNumber*boxSize,10), "Expense Block")
+                            Stats = Text(Point(357+ballNumber*boxSize,30), "HP: 50, E: N, Special: Takes Money")
+                            Description = Text(Point(357+ballNumber*boxSize,50), "Description: Upon death, always adds $175 to expenses")
+                        if choice2 == 10:
+                            Name = Text(Point(357+ballNumber*boxSize,10), "Mirror Block")
+                            Stats = Text(Point(357+ballNumber*boxSize,30), "HP: N/A, E: N, Special: Reflects/Teleports Ball")
+                            Description = Text(Point(357+ballNumber*boxSize,50), "Description: Once hit, teleports the ball across the center.")
+                else:
+                    click2 = window.getMouse()
+                    placeDot.undraw()
+                    X1 = click1.getX()
+                    Y1 = click1.getY()
+                    X2 = click2.getX()
+                    Y2 = click2.getY()
+                    if X1>X2:
+                        X1=click2.getX()
+                        X2=click1.getX()
+                    if Y1>Y2:
+                        Y1=click2.getY()
+                        Y2=click1.getY()
+                    pillar = Rectangle(Point(X1,Y1),Point(X2,Y2))
+                    pillar.draw(window)
+                    pillar.setFill(colArray[TempType-1])
+                    X1Array.append(X1)
+                    Y1Array.append(Y1)
+                    X2Array.append(X2)
+                    Y2Array.append(Y2)
+                    BlockType.append(TempType)
+                    BuildObstacles.append(pillar)
+                    if (TempType != 0 and TempType != 2 and TempType != 11  and TempType != 9 and TempType != 10):
+                        validEdit = 1
+                    
+        buildMode = 1
         
-    if loadLevel == 1:
+        while buildMode == 1:
+                click1 = window.getMouse()
+                placeDot = Circle(Point(click1.getX(),click1.getY()),3)
+                placeDot.draw(window)
+                if click1.getY() <= boxSize and click1.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)):
+                    placeDot.undraw()
+                    if click1.getX() >= doneButtonX:
+                        buildMode = 0
+                        if doneButtonX+1*((WinWid-doneButtonX)/3) < click1.getX() and click1.getX() < doneButtonX+2*((WinWid-doneButtonX)/3) and validEdit == 1:
+                            editor = 2
+                            validEdit = 0
+                else:
+                    click2 = window.getMouse()
+                    placeDot.undraw()
+                    X1 = click1.getX()
+                    Y1 = click1.getY()
+                    X2 = click2.getX()
+                    Y2 = click2.getY()
+                    radius = (math.sqrt((X2-X1)**2+(Y2-Y1)**2))
+                    ball = Circle(Point(X1,Y1),radius)
+                    spawnX.append(X1)
+                    spawnY.append(Y1)
+                    spawnRadius.append(radius)
+                    ball.draw(window)
+                    BuildObstacles.append(ball)
+                    validEdit = 1
+                    
+        if doneButtonX+1*((WinWid-doneButtonX)/3) < click1.getX() and click1.getX() < doneButtonX+2*((WinWid-doneButtonX)/3):
+            editor = 2
+
+
+            
+    if editor !=0 and MemLoad == 0:
+        for d in range(len(BuildObstacles)):
+            BuildObstacles[d].undraw()
+        for pain in range(len(BlockType)):
+            MemX1Array[pain] = X1Array[pain]
+            MemY1Array[pain] = Y1Array[pain]
+            MemX2Array[pain] = X2Array[pain]
+            MemY2Array[pain] = Y2Array[pain]
+            MemBlockType[pain] = BlockType[pain]
+        for pain in range(len(spawnRadius)):
+            MemSpawnX[pain] = spawnX[pain]
+            MemSpawnY[pain] = spawnY[pain]
+            MemSpawnRadius[pain] = spawnRadius[pain]
+
+
+            
+    if loadLevel == 1:           
         obsCount = len(BlockType)
         spawnCount = len(spawnRadius)
         for s in range(spawnCount):
@@ -1190,47 +1357,35 @@ while(1):
             TempType = BlockType[l]
             objHealth = abs((Y2-Y1)*(X2-X1))*HealthMul
             pillar = Rectangle(Point(X1,Y1),Point(X2,Y2))
-            if TempType == 1:
-                pillar.setFill(colType1)
             if TempType == 2:
                 objHealth = objHealth * 100000000000000
-                pillar.setFill(colType2)
             if TempType == 3:
-                pillar.setFill(colType3)
                 objHealth = objHealth * 0.5
-            if TempType == 4:
-                pillar.setFill(colType4)
             if TempType == 5:
-                pillar.setFill(colType5)
                 objHealth = objHealth * 2
             if TempType == 6:
-                pillar.setFill(colType6)
                 objHealth = objHealth * 0.5
             if TempType == 7:
-                pillar.setFill(colType7)
                 objHealth = objHealth * 4
             if TempType == 8:
-                pillar.setFill(colType8)
                 objHealth = objHealth * 0.25
             if TempType == 9:
-                pillar.setFill(colType9)
                 objHealth = objHealth * 2
             if TempType == 10:
-                pillar.setFill(colType10)
                 objHealth = objHealth * 0.5
             if TempType == 11:
-                pillar.setFill(colType11)
                 objHealth = objHealth * 0.001
             obstacles[l] = (pillar)
             obsHealth[l] = (objHealth)
+            obstacles[l].setFill(colArray[TempType-1])
             Within[l] = 0
             alreadyMirrored[l] = 0
             obstacles[l].draw(window)
             levelBeat = 0
             cL.undraw()
             cL = Text(Point(117+ballNumber*boxSize,50), "Level: "+str(currentLevel))
-            cL.draw(window)
             cL.setSize(10)
+            cL.draw(window)
         if spawnCount >0:
             validSpawn = 0
             while validSpawn == 0:
@@ -1265,12 +1420,15 @@ while(1):
         xCord = 0
         yCord = 0
         cannon.setFill(color_rgb(40,200,40))
-        if choice !=8:
+        if choice !=8 and editor != 2:
             aim=window.getMouse()
         else:
-            if runNormally !=-2 or justPicked8 == 1:
+            if (runNormally !=-2 or justPicked8 == 1) and editor != 2:
                 #print("click 1; -2 !=",runNormally,"or 1 ==",justPicked8)
                 aim=window.getMouse()
+        if editor == 2:
+            aim = click1
+            editor = 0
         if justPicked8 == 1:
             justPicked8 = 0
         #print(runNormally)
@@ -1285,12 +1443,14 @@ while(1):
                 if aim.getX() >= doneButtonX:
                     if aim.getX() <= doneButtonX+1*((WinWid-doneButtonX)/3) and currentLevel != 1:
                         lastLevel = 1
-                    if aim.getX() <= doneButtonX+1*((WinWid-doneButtonX)/3) and currentLevel == 1 and levelsComplete >= maxLevel:
-                        currentLevel = maxLevel
-                    if aim.getX() >= doneButtonX+2*((WinWid-doneButtonX)/3) and currentLevel < levelsComplete:
+                    if aim.getX() <= doneButtonX+1*((WinWid-doneButtonX)/3) and currentLevel == 1 and levelsComplete > maxLevel:
+                        currentLevel = maxLevel+1
+                    if aim.getX() >= doneButtonX+2*((WinWid-doneButtonX)/3) and (currentLevel < levelsComplete or currentLevel == maxLevel+2):
                         nextLevel = 1
+                        print("yeah next lvl!")
                     levelBeat = 1
-                    restart = 1
+                    if justBuilt == 0:
+                        restart = 1
                 if choice2 == 0:
                     Name = Text(Point(357+ballNumber*boxSize,10), "Regular Block")
                     Stats = Text(Point(357+ballNumber*boxSize,30), "HP: 100, E: Y, Special: None")
@@ -1646,7 +1806,9 @@ while(1):
                                             tC.undraw()
                                             tC = Text(Point(117+ballNumber*boxSize,10), "Total Expenses: $"+str(totalCost))
                                             tC.draw(window)
+                                        #print("About to change BlockType Array",MemBlockType)
                                         BlockType[o]=0
+                                        #print("Done",MemBlockType)
                         else:
                             WithinX = 0
                         Within[o] = WithinX
@@ -1656,8 +1818,21 @@ while(1):
                 
             levelBeat = 1
             for b in range(obsCount):
-                if (BlockType[b] != 0 and BlockType[b] != 2 and BlockType[b] != 11  and BlockType[b] != 9 and BlockType[b] != 10) and restart == 0:
+                if ((BlockType[b] != 0 and BlockType[b] != 2 and BlockType[b] != 11  and BlockType[b] != 9 and BlockType[b] != 10) and restart == 0):
                     levelBeat = 0
+            if currentLevel == maxLevel +1 and levelBeat == 1:  
+                for pain in range(len(BlockType)):
+                    X1Array[pain] = MemX1Array[pain]
+                    Y1Array[pain] = MemY1Array[pain]
+                    X2Array[pain] = MemX2Array[pain]
+                    Y2Array[pain] = MemY2Array[pain]
+                    BlockType[pain] = MemBlockType[pain]
+                for pain in range(len(spawnRadius)):
+                    spawnX[pain] = MemSpawnX[pain]
+                    spawnY[pain] = MemSpawnY[pain]
+                    spawnRadius[pain] = MemSpawnRadius[pain]
+                MemLoad = 1
+                        
             #print(choice8Ran,"== 0 and",runNormally,"== -2 and",viewingBlocks,"== 0 and",levelBeat,"== 0")
             if choice8Ran == 0 and runNormally == -2 and viewingBlocks == 0 and levelBeat == 0:
                 runChoices = 0
@@ -1674,7 +1849,6 @@ while(1):
                     OGGravity = -OGGravity/(2)
                     h = shootForward*((aim.getX()-canPosX))
                     v = ((aim.getY()-canPosY))
-                    print(h/shootForward,v,shootForward)
                     numer1 = math.sqrt(abs((-2*(OGGravity)*velocity*velocity*-(2*v))-((OGGravity*OGGravity)*(-2*h)*(-2*h))+(velocity*velocity*velocity*velocity)))
                     dem1 = OGGravity*(-2*h)
                     if dem1 != 0:
@@ -1706,13 +1880,14 @@ while(1):
                 if choice8Ran == 2:
                     choice8Ran = 0
             viewingBlocks = 0
-        if levelBeat == 1:
+        
+        if levelBeat == 1 or currentLevel == maxLevel +1:
             for u in range(obsCount):
-                if BlockType[u] != 0:
+                if BlockType[u] != 0 and currentLevel != maxLevel +1:
                     obstacles[u].undraw()
             for u in range(spawnCount):
                 spawnRing[u].undraw()
-            if restart == 0 and lastLevel == 0 and nextLevel == 0:
+            if restart == 0 and lastLevel == 0 and nextLevel == 0 and currentLevel != maxLevel +1:
                 levelCost[currentLevel-1] = totalCost
                 levelBalls[currentLevel-1] = timesFired
                 currentLevel = currentLevel + 1
@@ -1720,7 +1895,7 @@ while(1):
                     levelsComplete = currentLevel
             if lastLevel == 1:
                 currentLevel = currentLevel - 1
-            if nextLevel == 1:
+            if nextLevel == 1 and MemLoad == 0:
                 currentLevel = currentLevel + 1
             restart = 0
             lastLevel = 0
