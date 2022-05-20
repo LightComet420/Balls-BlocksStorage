@@ -421,7 +421,7 @@ buildMode = 0
 #     \|||/
 #      \|/
 while(1):
-    print(currentLevel)
+    print("first",currentLevel,maxLevel+2)
     if currentLevel == maxLevel+2:
         currentLevel = 1
     if currentLevel == maxLevel+1 and prevLevel == maxLevel:
@@ -460,7 +460,12 @@ while(1):
             spawnX.append(MemSpawnX[pain])
             spawnY.append(MemSpawnY[pain])
             spawnRadius.append(MemSpawnRadius[pain])
+        MemLoad = 0
     editor = 0
+
+
+
+    
     if currentLevel == 1:
         X1Array = [432]
         Y1Array = [410]
@@ -1171,7 +1176,7 @@ while(1):
         
     if currentLevel == maxLevel:
         availableChoices = 11
-    
+        
     if justBuilt== 1 and justBuilt2 == 0:
         justBuilt = 0
     else:
@@ -1196,25 +1201,36 @@ while(1):
         buildMode = 1
         editor = 1
         validEdit = 0
-        while buildMode == 1:
+        BuildObstacles = []
+        while buildMode == 1 or validEdit == 0:
                 click1 = window.getMouse()
                 qT.undraw()
                 qT2.undraw()
                 placeDot = Circle(Point(click1.getX(),click1.getY()),3)
                 placeDot.draw(window)
+                #print(click1.getY()," <= ",boxSize," and ",click1.getX()," >= ",WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)))
                 if click1.getY() <= boxSize and click1.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)):
                     placeDot.undraw()
                     if click1.getX() >= doneButtonX:
-                        if doneButtonX+1*((WinWid-doneButtonX)/3) < click1.getX() and click1.getX() < doneButtonX+2*((WinWid-doneButtonX)/3) and validEdit == 1:
-                            editor = 2
-                            validEdit = 0
+                        #if doneButtonX+1*((WinWid-doneButtonX)/3) < click1.getX() and click1.getX() < doneButtonX+2*((WinWid-doneButtonX)/3):
+                        if click1.getX() < doneButtonX+1*((WinWid-doneButtonX)/3):
+                            lastLevel = 1
+                            validEdit = 1
+                        if doneButtonX+2*((WinWid-doneButtonX)/3) < click1.getX():
+                            nextLevel = 1
+                            validEdit = 1
+                        editor = 2
                         buildMode = 0
+                        levelBeat = 0
                     else:
-                        pastChoice = choice
-                        choice = (35-round((click1.getX()+(0.75*boxSize)-(WinWid-doneButtonX))/boxSize))
+                        pastChoice2 = choice2
+                        choice2 = (35-round((click1.getX()+(0.75*boxSize)-(WinWid-doneButtonX))/boxSize))
                         extraBlocks[pastChoice].setOutline(color_rgb(200,10,10))
                         extraBlocks[choice].setOutline(color_rgb(10,200,10))
-                        TempType=choice+1
+                        Name.undraw()
+                        Stats.undraw()
+                        Description.undraw()
+                        TempType = choice2 + 1
                         if choice2 == 0:
                             Name = Text(Point(357+ballNumber*boxSize,10), "Regular Block")
                             Stats = Text(Point(357+ballNumber*boxSize,30), "HP: 100, E: Y, Special: None")
@@ -1259,6 +1275,12 @@ while(1):
                             Name = Text(Point(357+ballNumber*boxSize,10), "Mirror Block")
                             Stats = Text(Point(357+ballNumber*boxSize,30), "HP: N/A, E: N, Special: Reflects/Teleports Ball")
                             Description = Text(Point(357+ballNumber*boxSize,50), "Description: Once hit, teleports the ball across the center.")
+                        Name.setSize(10)
+                        Stats.setSize(10)
+                        Description.setSize(10)
+                        Name.draw(window)
+                        Stats.draw(window)
+                        Description.draw(window)
                 else:
                     click2 = window.getMouse()
                     placeDot.undraw()
@@ -1285,18 +1307,23 @@ while(1):
                         validEdit = 1
                     
         buildMode = 1
+        validEdit = 0
         
-        while buildMode == 1:
+        while (buildMode == 1 or validEdit == 0) and nextLevel == 0 and lastLevel == 0:
                 click1 = window.getMouse()
                 placeDot = Circle(Point(click1.getX(),click1.getY()),3)
                 placeDot.draw(window)
                 if click1.getY() <= boxSize and click1.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)):
                     placeDot.undraw()
                     if click1.getX() >= doneButtonX:
+                        #if doneButtonX+1*((WinWid-doneButtonX)/3) < click1.getX() and click1.getX() < doneButtonX+2*((WinWid-doneButtonX)/3):
+                        if click1.getX() < doneButtonX+1*((WinWid-doneButtonX)/3):
+                            lastLevel = 1
+                        if doneButtonX+2*((WinWid-doneButtonX)/3) < click1.getX():
+                            nextLevel = 1
+                        editor = 2
                         buildMode = 0
-                        if doneButtonX+1*((WinWid-doneButtonX)/3) < click1.getX() and click1.getX() < doneButtonX+2*((WinWid-doneButtonX)/3) and validEdit == 1:
-                            editor = 2
-                            validEdit = 0
+                        levelBeat = 0
                 else:
                     click2 = window.getMouse()
                     placeDot.undraw()
@@ -1312,25 +1339,29 @@ while(1):
                     ball.draw(window)
                     BuildObstacles.append(ball)
                     validEdit = 1
-                    
-        if doneButtonX+1*((WinWid-doneButtonX)/3) < click1.getX() and click1.getX() < doneButtonX+2*((WinWid-doneButtonX)/3):
-            editor = 2
-
-
+    print(len(BuildObstacles))
+    for d in range(len(BuildObstacles)):
+        BuildObstacles[d].undraw()
             
     if editor !=0 and MemLoad == 0:
-        for d in range(len(BuildObstacles)):
-            BuildObstacles[d].undraw()
+        MemX1Array = []
+        MemY1Array = []
+        MemX2Array = []
+        MemY2Array = []
+        MemBlockType = []
+        MemSpawnX = []
+        MemSpawnY = []
+        MemSpawnRadius = []
         for pain in range(len(BlockType)):
-            MemX1Array[pain] = X1Array[pain]
-            MemY1Array[pain] = Y1Array[pain]
-            MemX2Array[pain] = X2Array[pain]
-            MemY2Array[pain] = Y2Array[pain]
-            MemBlockType[pain] = BlockType[pain]
+            MemX1Array.append(X1Array[pain])
+            MemY1Array.append(Y1Array[pain])
+            MemX2Array.append(X2Array[pain])
+            MemY2Array.append(Y2Array[pain])
+            MemBlockType.append(BlockType[pain])
         for pain in range(len(spawnRadius)):
-            MemSpawnX[pain] = spawnX[pain]
-            MemSpawnY[pain] = spawnY[pain]
-            MemSpawnRadius[pain] = spawnRadius[pain]
+            MemSpawnX.append(spawnX[pain])
+            MemSpawnY.append(spawnY[pain])
+            MemSpawnRadius.append(spawnRadius[pain])
 
 
             
@@ -1415,6 +1446,7 @@ while(1):
                 spawnRing[u].undraw()
         validSpawn = 0
     
+    #print("second",currentLevel,maxLevel+2,editor,levelBeat)
     while(levelBeat == 0):
         gravity = OGGravity/scale
         xCord = 0
@@ -1428,7 +1460,6 @@ while(1):
                 aim=window.getMouse()
         if editor == 2:
             aim = click1
-            editor = 0
         if justPicked8 == 1:
             justPicked8 = 0
         #print(runNormally)
@@ -1445,12 +1476,13 @@ while(1):
                         lastLevel = 1
                     if aim.getX() <= doneButtonX+1*((WinWid-doneButtonX)/3) and currentLevel == 1 and levelsComplete > maxLevel:
                         currentLevel = maxLevel+1
+                        obstacles[0].undraw()
                     if aim.getX() >= doneButtonX+2*((WinWid-doneButtonX)/3) and (currentLevel < levelsComplete or currentLevel == maxLevel+2):
                         nextLevel = 1
-                        print("yeah next lvl!")
                     levelBeat = 1
-                    if justBuilt == 0:
-                        restart = 1
+                    restart = 1
+                    if nextLevel == 0 and lastLevel == 0 and editor == 2:
+                        restart = 0
                 if choice2 == 0:
                     Name = Text(Point(357+ballNumber*boxSize,10), "Regular Block")
                     Stats = Text(Point(357+ballNumber*boxSize,30), "HP: 100, E: Y, Special: None")
@@ -1502,6 +1534,7 @@ while(1):
                 Stats.draw(window)
                 Description.draw(window)
                 viewingBlocks = 1
+        editor = 0
         ignoreBlockChoices = 0                    
         if aim.getX() <= canPosX:
             shootForward = -1
@@ -1820,17 +1853,26 @@ while(1):
             for b in range(obsCount):
                 if ((BlockType[b] != 0 and BlockType[b] != 2 and BlockType[b] != 11  and BlockType[b] != 9 and BlockType[b] != 10) and restart == 0):
                     levelBeat = 0
-            if currentLevel == maxLevel +1 and levelBeat == 1:  
-                for pain in range(len(BlockType)):
-                    X1Array[pain] = MemX1Array[pain]
-                    Y1Array[pain] = MemY1Array[pain]
-                    X2Array[pain] = MemX2Array[pain]
-                    Y2Array[pain] = MemY2Array[pain]
-                    BlockType[pain] = MemBlockType[pain]
-                for pain in range(len(spawnRadius)):
-                    spawnX[pain] = MemSpawnX[pain]
-                    spawnY[pain] = MemSpawnY[pain]
-                    spawnRadius[pain] = MemSpawnRadius[pain]
+            print(currentLevel,"==",maxLevel +1,"and",levelBeat,"==",1,"and",editor,"!=",2)
+            if currentLevel == maxLevel +1 and levelBeat == 1 and editor !=2:
+                X1Array = []
+                Y1Array = []
+                X2Array = []
+                Y2Array = []
+                BlockType = []
+                spawnX = []
+                spawnY = []
+                spawnRadius = []
+                for pain in range(len(MemBlockType)):
+                    X1Array.append(MemX1Array[pain])
+                    Y1Array.append(MemY1Array[pain])
+                    X2Array.append(MemX2Array[pain])
+                    Y2Array.append(MemY2Array[pain])
+                    BlockType.append(MemBlockType[pain])
+                for pain in range(len(MemSpawnRadius)):
+                    spawnX.append(MemSpawnX[pain])
+                    spawnY.append(MemSpawnY[pain])
+                    spawnRadius.append(MemSpawnRadius[pain])
                 MemLoad = 1
                         
             #print(choice8Ran,"== 0 and",runNormally,"== -2 and",viewingBlocks,"== 0 and",levelBeat,"== 0")
@@ -1880,8 +1922,10 @@ while(1):
                 if choice8Ran == 2:
                     choice8Ran = 0
             viewingBlocks = 0
-        
+            
         if levelBeat == 1 or currentLevel == maxLevel +1:
+            obsCount = len(BlockType)
+            spawnCount = len(spawnRadius)
             for u in range(obsCount):
                 if BlockType[u] != 0 and currentLevel != maxLevel +1:
                     obstacles[u].undraw()
@@ -1895,8 +1939,10 @@ while(1):
                     levelsComplete = currentLevel
             if lastLevel == 1:
                 currentLevel = currentLevel - 1
-            if nextLevel == 1 and MemLoad == 0:
+            if nextLevel == 1:
                 currentLevel = currentLevel + 1
+            if currentLevel == maxLevel +1 and (nextLevel == 1 or lastLevel == 1):
+                levelBeat = 1
             restart = 0
             lastLevel = 0
             nextLevel = 0
