@@ -345,6 +345,7 @@ MemSpawnX = []
 MemSpawnY = []
 MemSpawnRadius = []
 MemLoad = 0
+MemRestart = 0
 MemX1Array.extend(empty)
 MemY1Array.extend(empty)
 MemX2Array.extend(empty)
@@ -460,7 +461,6 @@ while(1):
             spawnX.append(MemSpawnX[pain])
             spawnY.append(MemSpawnY[pain])
             spawnRadius.append(MemSpawnRadius[pain])
-        MemLoad = 0
     editor = 0
 
 
@@ -1181,9 +1181,11 @@ while(1):
         justBuilt = 0
     else:
         justBuilt2 = 0
-        
+
+    print(currentLevel,"==",maxLevel+1,"and",justBuilt,"==",0,"and",justBuilt2,"==",0,"and",MemLoad,"==",0)
     if currentLevel == maxLevel+1 and justBuilt == 0 and justBuilt2 == 0 and MemLoad == 0:
         availableChoices = 11
+        MemRestart = 0
         justBuilt = 1
         justBuilt2 = 1
         qTMessage = "Build your own level by selecting block icons and clicking two places to make them. Press"
@@ -1202,21 +1204,26 @@ while(1):
         editor = 1
         validEdit = 0
         BuildObstacles = []
+        canSkip = 1
+        cL.undraw()
+        cL = Text(Point(117+ballNumber*boxSize,50), "Level: "+str(currentLevel))
+        cL.setSize(10)
+        cL.draw(window)
         while buildMode == 1 or validEdit == 0:
                 click1 = window.getMouse()
                 qT.undraw()
                 qT2.undraw()
                 placeDot = Circle(Point(click1.getX(),click1.getY()),3)
                 placeDot.draw(window)
-                #print(click1.getY()," <= ",boxSize," and ",click1.getX()," >= ",WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)))
+                #rint(click1.getY()," <= ",boxSize," and ",click1.getX()," >= ",WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)))
                 if click1.getY() <= boxSize and click1.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)):
                     placeDot.undraw()
                     if click1.getX() >= doneButtonX:
                         #if doneButtonX+1*((WinWid-doneButtonX)/3) < click1.getX() and click1.getX() < doneButtonX+2*((WinWid-doneButtonX)/3):
-                        if click1.getX() < doneButtonX+1*((WinWid-doneButtonX)/3):
+                        if click1.getX() < doneButtonX+1*((WinWid-doneButtonX)/3) and canSkip == 1:
                             lastLevel = 1
                             validEdit = 1
-                        if doneButtonX+2*((WinWid-doneButtonX)/3) < click1.getX():
+                        if doneButtonX+2*((WinWid-doneButtonX)/3) < click1.getX() and canSkip == 1:
                             nextLevel = 1
                             validEdit = 1
                         editor = 2
@@ -1303,11 +1310,13 @@ while(1):
                     Y2Array.append(Y2)
                     BlockType.append(TempType)
                     BuildObstacles.append(pillar)
+                    canSkip = 0
                     if (TempType != 0 and TempType != 2 and TempType != 11  and TempType != 9 and TempType != 10):
                         validEdit = 1
                     
         buildMode = 1
         validEdit = 0
+        canSkip = 0
         
         while (buildMode == 1 or validEdit == 0) and nextLevel == 0 and lastLevel == 0:
                 click1 = window.getMouse()
@@ -1315,12 +1324,7 @@ while(1):
                 placeDot.draw(window)
                 if click1.getY() <= boxSize and click1.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)):
                     placeDot.undraw()
-                    if click1.getX() >= doneButtonX:
-                        #if doneButtonX+1*((WinWid-doneButtonX)/3) < click1.getX() and click1.getX() < doneButtonX+2*((WinWid-doneButtonX)/3):
-                        if click1.getX() < doneButtonX+1*((WinWid-doneButtonX)/3):
-                            lastLevel = 1
-                        if doneButtonX+2*((WinWid-doneButtonX)/3) < click1.getX():
-                            nextLevel = 1
+                    if click1.getX() >= doneButtonX and click1.getX() >= doneButtonX+1*((WinWid-doneButtonX)/3) and doneButtonX+2*((WinWid-doneButtonX)/3) >= click1.getX():
                         editor = 2
                         buildMode = 0
                         levelBeat = 0
@@ -1339,7 +1343,10 @@ while(1):
                     ball.draw(window)
                     BuildObstacles.append(ball)
                     validEdit = 1
-    print(len(BuildObstacles))
+
+
+                    
+    #rint(len(BuildObstacles))
     for d in range(len(BuildObstacles)):
         BuildObstacles[d].undraw()
             
@@ -1446,7 +1453,7 @@ while(1):
                 spawnRing[u].undraw()
         validSpawn = 0
     
-    #print("second",currentLevel,maxLevel+2,editor,levelBeat)
+    #rint("second",currentLevel,maxLevel+2,editor,levelBeat)
     while(levelBeat == 0):
         gravity = OGGravity/scale
         xCord = 0
@@ -1456,13 +1463,13 @@ while(1):
             aim=window.getMouse()
         else:
             if (runNormally !=-2 or justPicked8 == 1) and editor != 2:
-                #print("click 1; -2 !=",runNormally,"or 1 ==",justPicked8)
+                #rint("click 1; -2 !=",runNormally,"or 1 ==",justPicked8)
                 aim=window.getMouse()
         if editor == 2:
             aim = click1
         if justPicked8 == 1:
             justPicked8 = 0
-        #print(runNormally)
+        #rint(runNormally)
         qT.undraw()
         qT2.undraw()
         if aim.getY() <= boxSize and aim.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)) and choice != 8:
@@ -1481,6 +1488,12 @@ while(1):
                         nextLevel = 1
                     levelBeat = 1
                     restart = 1
+                    MemLoad = 0
+                    if MemRestart == 1:
+                        for u in range(obsCount):
+                            obstacles[u].undraw()
+                        for u in range(spawnCount):
+                            spawnRing[u].undraw()
                     if nextLevel == 0 and lastLevel == 0 and editor == 2:
                         restart = 0
                 if choice2 == 0:
@@ -1541,13 +1554,13 @@ while(1):
         if aim.getX() > canPosX:
             shootForward = 1
         ballHealth = newBallHealth
-        #print(aim.getY(),"<=",boxSize,"and",aim.getX(),"<= ",boxSize*ballNumber,"and",runChoices,"==",1,"and",viewingBlocks,"==",0,"or",justStarted,"==",1)
+        #rint(aim.getY(),"<=",boxSize,"and",aim.getX(),"<= ",boxSize*ballNumber,"and",runChoices,"==",1,"and",viewingBlocks,"==",0,"or",justStarted,"==",1)
         if (aim.getY() <= boxSize and aim.getX() <= boxSize*ballNumber and runChoices == 1 and viewingBlocks == 0) or justStarted == 1:
             if justStarted == 0:
                 pastChoice = choice
                 choice = round((aim.getX()-(boxSize/2))/boxSize)
             justStarted = 0
-            #print("ran choices")
+            #rint("ran choices")
             if runChoices== 1 and choice < availableChoices:
                     extraBalls[pastChoice].setOutline(color_rgb(200,10,10))
                     extraBalls[choice].setOutline(color_rgb(10,200,10))
@@ -1775,7 +1788,7 @@ while(1):
                             Y1=obs.getP2().getY()
                             Y2=obs.getP1().getY()
                         cord = array[1].getP1()
-                        #print(X1-(projRadius),"<=",cord.getX(),"<=",X2+(projRadius),"and",Y2-(projRadius),"<=",cord.getY(),"<=",Y1+(projRadius))
+                        #rint(X1-(projRadius),"<=",cord.getX(),"<=",X2+(projRadius),"and",Y2-(projRadius),"<=",cord.getY(),"<=",Y1+(projRadius))
                         if HitboxesEnabled == 1:
                             newCirc = Circle(Point(currentX,currentY),3)
                             newCirc.draw(window)
@@ -1839,9 +1852,9 @@ while(1):
                                             tC.undraw()
                                             tC = Text(Point(117+ballNumber*boxSize,10), "Total Expenses: $"+str(totalCost))
                                             tC.draw(window)
-                                        #print("About to change BlockType Array",MemBlockType)
+                                        #rint("About to change BlockType Array",MemBlockType)
                                         BlockType[o]=0
-                                        #print("Done",MemBlockType)
+                                        #rint("Done",MemBlockType)
                         else:
                             WithinX = 0
                         Within[o] = WithinX
@@ -1854,7 +1867,7 @@ while(1):
                 if ((BlockType[b] != 0 and BlockType[b] != 2 and BlockType[b] != 11  and BlockType[b] != 9 and BlockType[b] != 10) and restart == 0):
                     levelBeat = 0
             print(currentLevel,"==",maxLevel +1,"and",levelBeat,"==",1,"and",editor,"!=",2)
-            if currentLevel == maxLevel +1 and levelBeat == 1 and editor !=2:
+            if currentLevel == maxLevel +1 and levelBeat == 1 and editor !=2 and MemRestart == 0:
                 X1Array = []
                 Y1Array = []
                 X2Array = []
@@ -1874,11 +1887,12 @@ while(1):
                     spawnY.append(MemSpawnY[pain])
                     spawnRadius.append(MemSpawnRadius[pain])
                 MemLoad = 1
+                MemRestart = 1
                         
-            #print(choice8Ran,"== 0 and",runNormally,"== -2 and",viewingBlocks,"== 0 and",levelBeat,"== 0")
+            #rint(choice8Ran,"== 0 and",runNormally,"== -2 and",viewingBlocks,"== 0 and",levelBeat,"== 0")
             if choice8Ran == 0 and runNormally == -2 and viewingBlocks == 0 and levelBeat == 0:
                 runChoices = 0
-                #print("waiting for click 2")
+                #rint("waiting for click 2")
                 aim = window.getMouse()         
                 if aim.getX() <= canPosX:
                     shootForward = -1
