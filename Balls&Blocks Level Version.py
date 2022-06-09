@@ -6,6 +6,7 @@ OGWinHei = 768
 WinWid = 1366
 WinHei = 768
 window = GraphWin("Window", WinWid,WinHei);
+window.setCoords(0, WinHei, WinWid, 0)
 
 XR = WinWid/OGWinWid
 YR = WinHei/OGWinHei
@@ -42,7 +43,7 @@ columns = 10
 height = 20
 obsCount = 1
 empty = []
-for a in range(100):
+for a in range(10000):
     empty.append(0)
 obstacles = []
 obstacles.extend(empty)
@@ -389,28 +390,50 @@ justBuilt2 = 0
 totalTotalCost = 0
 totalTotalBalls = 0
 colArray = [colType1,colType2,colType3,colType4,colType5,colType6,colType7,colType8,colType9,colType10,colType11]
+joke = 0
+if joke == 1:
+    print("------------UPDATE LOG------------")
+    print("~fixed nothing")
+    print("~removed fun")
+    print("~removed good levels")
+    print("~optimized lag")
+    print("~nerfed enjoyable experience")
+    print("~nerfed good UI")
+    print("~buffed frustration")
+    print("~added worse levels")
+    print("~added glitches")
+    print("")
+    print("")
+    print("")
+print("------------TIPS FOR USER------------")
+print("To load/print scores, beat the last level (you can do it over")
+print("and over) you can also go back to change scores")
+print("-I didn't have time to add more tips so you just have to")
+print("suffer")
 
-print("------------UPDATE LOG------------")
-print("~fixed nothing")
-print("~removed fun")
-print("~removed good levels")
-print("~optimized lag")
-print("~nerfed enjoyable experience")
-print("~nerfed good UI")
-print("~buffed frustration")
-print("~added worse levels")
-print("~added glitches")
+print("------------BUG NOTES FOR USER------------")
+print("-If you get stuck, the three colorful buttons in the corner")
+print("are last level, restart level, and next level")
+print("-Buttons won't work? Try spawning in the spawn ring first")
+print("-Did you miss something with a fast or tiny ball? That may")
+print("happen because the ball 'teleported' through it, the ball")
+print("moves in frames so it doesn't always cover every pixel")
+print("-Can't skip to next level? Beat the level you're on then so")
+print("that you unlock the next")
+print("-Can't use some balls? You have to get to higher levels to")
+print("unlock them")
+print("-If you found a bug and ^that^ doesn't explain, then that's")
+print("actually a bug")
 print("")
-print("")
-print("")
+print("Game created by Luke L.")
 GUIfix = 0
 justPicked8 = 0
 
 ignoreBlockChoices = 0
 maxLevel = 42
-currentLevel = 42
+currentLevel = 1
 prevLevel = 0
-levelsComplete = maxLevel+100
+levelsComplete = 0
 OGFrameMul = 1
 FrameMul = OGFrameMul
 buildMode = 0
@@ -422,7 +445,6 @@ buildMode = 0
 #     \|||/
 #      \|/
 while(1):
-    print("first",currentLevel,maxLevel+2)
     if currentLevel == maxLevel+2:
         currentLevel = 1
     if currentLevel == maxLevel+1 and prevLevel == maxLevel:
@@ -1182,10 +1204,10 @@ while(1):
     else:
         justBuilt2 = 0
 
-    print(currentLevel,"==",maxLevel+1,"and",justBuilt,"==",0,"and",justBuilt2,"==",0,"and",MemLoad,"==",0)
     if currentLevel == maxLevel+1 and justBuilt == 0 and justBuilt2 == 0 and MemLoad == 0:
         availableChoices = 11
         MemRestart = 0
+        levelsComplete = maxLevel + 100
         justBuilt = 1
         justBuilt2 = 1
         qTMessage = "Build your own level by selecting block icons and clicking two places to make them. Press"
@@ -1473,6 +1495,7 @@ while(1):
         qT.undraw()
         qT2.undraw()
         if aim.getY() <= boxSize and aim.getX() >= WinWid-(boxSize*blockNumber+(WinWid-doneButtonX)) and choice != 8:
+                viewingBlocks = 1
                 pastChoice2 = choice2
                 choice2 = (35-round((aim.getX()+(0.75*boxSize)-(WinWid-doneButtonX))/boxSize))
                 Name.undraw()
@@ -1546,7 +1569,6 @@ while(1):
                 Name.draw(window)
                 Stats.draw(window)
                 Description.draw(window)
-                viewingBlocks = 1
         editor = 0
         ignoreBlockChoices = 0                    
         if aim.getX() <= canPosX:
@@ -1866,7 +1888,6 @@ while(1):
             for b in range(obsCount):
                 if ((BlockType[b] != 0 and BlockType[b] != 2 and BlockType[b] != 11  and BlockType[b] != 9 and BlockType[b] != 10) and restart == 0):
                     levelBeat = 0
-            print(currentLevel,"==",maxLevel +1,"and",levelBeat,"==",1,"and",editor,"!=",2)
             if currentLevel == maxLevel +1 and levelBeat == 1 and editor !=2 and MemRestart == 0:
                 X1Array = []
                 Y1Array = []
